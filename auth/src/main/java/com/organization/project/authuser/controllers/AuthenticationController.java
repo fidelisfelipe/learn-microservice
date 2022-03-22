@@ -1,5 +1,6 @@
 package com.organization.project.authuser.controllers;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.organization.project.authuser.dtos.UserDto;
 import com.organization.project.authuser.models.UserModel;
 import com.organization.project.authuser.models.enums.UserStatus;
@@ -20,7 +21,8 @@ public class AuthenticationController {
     UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerUser(@RequestBody UserDto userDto){
+    public ResponseEntity<Object> registerUser(@RequestBody
+                                                   @JsonView(UserDto.UserView.RegistrationPost.class) UserDto userDto){
         if(userService.existsByUsername(userDto.getUsername()))
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: username found");
 

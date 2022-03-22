@@ -4,15 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.organization.project.authuser.dtos.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.organization.project.authuser.models.UserModel;
 import com.organization.project.authuser.services.UserService;
@@ -46,5 +43,53 @@ public class UserController {
 
         userService.delete(user.get());
         return ResponseEntity.status(HttpStatus.OK).body(user.get());
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<Object> update(@PathVariable(value = "userId") UUID userId,
+                                         @RequestBody @JsonView(UserDto.UserView.UserPut.class) UserDto userDto){
+        Optional<UserModel> user = userService.findById(userId);
+        if(!user.isPresent())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user not found");
+
+        var userUpdate = user.get();
+        userUpdate.setFullName(userDto.getFullName());
+        userUpdate.setPhoneNumber(userDto.getPhoneNumber());
+        userUpdate.setCpf(userDto.getCpf());
+
+        userService.save(user.get());
+        return ResponseEntity.status(HttpStatus.OK).body(userUpdate);
+    }
+
+    @PutMapping("/{userId}/password")
+    public ResponseEntity<Object> updatePassword(@PathVariable(value = "userId") UUID userId,
+                                                 @RequestBody @JsonView(UserDto.UserView.PasswordPut.class) UserDto userDto){
+
+        Optional<UserModel> user = userService.findById(userId);
+        if(!user.isPresent())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user not found");
+
+        if(!user.get().getPassword().equals(userDto.getOldPassword()))
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("mismatched old password");
+
+        var userUpdate = user.get();
+        userUpdate.setPassword(userDto.getPassword());
+
+        userService.save(user.get());
+        return ResponseEntity.status(HttpStatus.OK).body("password update success");
+    }
+
+    @PutMapping("/{userId}/image")
+    public ResponseEntity<Object> updateImg(@PathVariable(value = "userId") UUID userId,
+                                            @RequestBody @JsonView(UserDto.UserView.ImagePut.class) UserDto userDto){
+        Optional<UserModel> user = userService.findById(userId);
+        if(!user.isPresent())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user not found");
+
+        var userUpdate = user.get();
+        userUpdate.setImageURL(userDto.getImageURL());
+
+        userService.save(user.get());
+        return ResponseEntity.status(HttpStatus.OK).body("image update success");
     }
 }
