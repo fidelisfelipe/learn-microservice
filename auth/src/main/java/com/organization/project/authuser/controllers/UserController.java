@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.organization.project.authuser.dtos.UserDto;
+import com.organization.project.authuser.specifications.SpecificationTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,8 +31,9 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Page<UserModel>> getAllUsers(
+            SpecificationTemplate.UserSpec spec,
             @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC)Pageable pageable){
-        Page<UserModel> userPage = userService.findAll(pageable);
+        Page<UserModel> userPage = userService.findAll(spec, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(userPage);
     }
 

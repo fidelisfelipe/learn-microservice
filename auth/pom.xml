@@ -15,6 +15,7 @@
     <description>auth</description>
     <properties>
         <java.version>11</java.version>
+        <specification.resolver.version>2.6.2</specification.resolver.version>
     </properties>
     <dependencies>
         <dependency>
@@ -39,6 +40,14 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.kaczmarzyk/specification-arg-resolver -->
+        <dependency>
+            <groupId>net.kaczmarzyk</groupId>
+            <artifactId>specification-arg-resolver</artifactId>
+            <version>${specification.resolver.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
