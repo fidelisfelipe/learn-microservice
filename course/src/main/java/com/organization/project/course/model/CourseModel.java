@@ -1,20 +1,23 @@
 package com.organization.project.course.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.organization.project.course.enums.CourseLevel;
 import com.organization.project.course.enums.CourseStatus;
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -51,4 +54,10 @@ public class CourseModel implements Serializable {
     private CourseLevel courseLevel;
     @Column(nullable = false)
     private UUID userInstructor;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)//cascade = CascadeType.ALL, orphanRemoval = true // realiza deleção item a item
+    @Fetch(FetchMode.SUBSELECT)
+    //@OnDelete(action = OnDeleteAction.CASCADE)//responsabilidade é passada para o banco de dados
+    private Set<ModuleModel> moduleList;
 }
