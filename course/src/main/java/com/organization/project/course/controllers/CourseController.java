@@ -70,6 +70,6 @@ public class CourseController {
         if(!courseOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not found");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(courseOptional);
+        return ResponseEntity.status(HttpStatus.OK).body(courseOptional.get());
     }
 }

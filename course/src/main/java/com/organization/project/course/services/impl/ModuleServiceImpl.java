@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ModuleServiceImpl implements ModuleService {
@@ -29,5 +31,21 @@ public class ModuleServiceImpl implements ModuleService {
             lessonsRepository.deleteAll(lessonList);
         }
         moduleRepository.delete(module);
+    }
+
+    @Override
+    public ModuleModel save(ModuleModel module) {
+        return moduleRepository.save(module);
+    }
+
+    @Override
+    public Optional<ModuleModel> findModuleIntoCourse(UUID courseId, UUID moduleId) {
+        return moduleRepository.findModuleIntoCourse(courseId, moduleId);
+    }
+
+    @Override
+    public List<ModuleModel> findAllByCourse(UUID courseId) {
+        return moduleRepository.findAllModulesIntoCourse(courseId);
+                ;
     }
 }
