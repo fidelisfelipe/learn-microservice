@@ -10,6 +10,7 @@ import com.organization.project.course.services.ModuleService;
 import com.organization.project.course.specifications.SpecificationTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -85,12 +86,11 @@ public class LessonController {
         return ResponseEntity.status(HttpStatus.OK).body(lessonOptional.get());
     }
 
-    @GetMapping
-    public ResponseEntity<Object> getAll(){
-        List<LessonModel> lessonList = lessonService.findAll();
-        if(lessonList.isEmpty()){
-            return ResponseEntity.status(HttpStatus.OK).body("empty courses");
-        }
+    @GetMapping("/{moduleId}/lessons")
+    public ResponseEntity<Page<LessonModel>> getAll(@PathVariable(value = "moduleId") UUID moduleId,
+                                         SpecificationTemplate.LessonSpec spec,
+                                         @PageableDefault(page = 0, size = 10, sort = "lessonId", direction = Sort.Direction.ASC) Pageable pageable){
+        Page<LessonModel> lessonList = lessonService.findAllByModule(SpecificationTemplate.lessonModuleId(moduleId).and(spec), pageable);
         return ResponseEntity.status(HttpStatus.OK).body(lessonList);
     }
 }

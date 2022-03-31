@@ -6,8 +6,13 @@ import com.organization.project.course.model.CourseModel;
 import com.organization.project.course.model.ModuleModel;
 import com.organization.project.course.services.CourseService;
 import com.organization.project.course.services.ModuleService;
+import com.organization.project.course.specifications.SpecificationTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -71,11 +76,10 @@ public class ModuleController {
     }
 
     @GetMapping("/{courseId}/modules")
-    public ResponseEntity<Object> getAll(@PathVariable(value = "courseId") UUID courseId){
-        List<ModuleModel> moduleList = moduleService.findAllByCourse(courseId);
-        if(moduleList.isEmpty()){
-            return ResponseEntity.status(HttpStatus.OK).body("empty modules");
-        }
+    public ResponseEntity<Page<ModuleModel>> getAll(@PathVariable(value = "courseId") UUID courseId,
+                                         SpecificationTemplate.ModuleSpec spec,
+                                         @PageableDefault(page = 0, size = 10, sort = "moduleId", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<ModuleModel> moduleList = moduleService.findAllByCourse(SpecificationTemplate.moduleCourseId(courseId).and(spec), pageable);
         return ResponseEntity.status(HttpStatus.OK).body(moduleList);
     }
 

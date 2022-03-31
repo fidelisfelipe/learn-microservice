@@ -5,7 +5,9 @@ import com.organization.project.course.repository.LessonsRepository;
 import com.organization.project.course.services.LessonService;
 import com.organization.project.course.specifications.SpecificationTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,11 +36,17 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public void delete(LessonModel lessonModel) {
+        lessonsRepository.delete(lessonModel);
+    }
 
+    @Override
+    public Page<LessonModel> findAllByModule(Specification<LessonModel> spec, Pageable pageable) {
+        return lessonsRepository.findAll(spec, pageable);
     }
 
     @Override
     public Optional<LessonModel> findLessonIntoModule(UUID moduleId, UUID lessonId) {
-        return Optional.empty();
+        System.out.println("not implemented findLessonIntoModule");
+        return Optional.empty();//TODO: not implemented
     }
 }
