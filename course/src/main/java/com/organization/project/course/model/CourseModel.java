@@ -41,10 +41,10 @@ public class CourseModel implements Serializable {
     @Column
     private String imageUrl;
     @CreationTimestamp
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss'Z'")
     private LocalDateTime creationDate;
     @UpdateTimestamp
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss'Z'")
     private LocalDateTime lastUpdateDate;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
