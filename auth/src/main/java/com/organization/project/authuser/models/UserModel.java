@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.organization.project.authuser.models.enums.UserStatus;
 import com.organization.project.authuser.models.enums.UserType;
 import lombok.Data;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -22,9 +23,9 @@ import java.util.UUID;
 public class UserModel extends RepresentationModel<UserModel> implements Serializable {
 	private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(generator = "uuid2")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "VARCHAR(36)")
+    @Column(nullable = false, columnDefinition = "VARCHAR(36)")
     @Type(type = "uuid-char")
     private UUID userId;
 
@@ -59,12 +60,12 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
     private String imageURL;
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss'Z'")
     @CreationTimestamp
     private LocalDateTime creationDate;
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss'Z'")
     @UpdateTimestamp
     private LocalDateTime lastUpdateDate;
 }

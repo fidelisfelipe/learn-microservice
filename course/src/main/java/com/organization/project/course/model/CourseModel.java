@@ -30,7 +30,7 @@ public class CourseModel implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "VARCHAR(36)")
+    @Column(nullable = false, columnDefinition = "VARCHAR(36)")
     @Type(type = "uuid-char")
     private UUID courseId;
 
