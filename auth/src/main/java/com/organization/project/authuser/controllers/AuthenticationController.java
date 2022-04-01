@@ -26,6 +26,7 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public ResponseEntity<Object> registerUser(@RequestBody @Validated(UserDto.UserView.RegistrationPost.class)
                                                    @JsonView(UserDto.UserView.RegistrationPost.class) UserDto userDto){
+        log.debug("POST registerUser userDto received {} ", userDto);
         if(userService.existsByUsername(userDto.getUsername()))
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: username found");
 
