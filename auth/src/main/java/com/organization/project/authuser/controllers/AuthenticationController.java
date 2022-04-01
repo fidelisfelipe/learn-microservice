@@ -27,17 +27,23 @@ public class AuthenticationController {
     public ResponseEntity<Object> registerUser(@RequestBody @Validated(UserDto.UserView.RegistrationPost.class)
                                                    @JsonView(UserDto.UserView.RegistrationPost.class) UserDto userDto){
         log.debug("POST registerUser userDto received {} ", userDto);
-        if(userService.existsByUsername(userDto.getUsername()))
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: username found");
 
-        if(userService.existsByEmail(userDto.getEmail()))
+        if(userService.existsByUsername(userDto.getUsername())) {
+            log.warn("Username {} is Already Taken ", userDto.getUsername());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: username found");
+        }
+
+        if(userService.existsByEmail(userDto.getEmail())) {
+            log.warn("Email {} is Already Taken ", userDto.getEmail());
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: email found");
+        }
 
         var userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
         userModel.setUserStatus(UserStatus.ACTIVE);
         userModel.setUserType(UserType.STUDENT);
         userService.save(userModel);
+        log.info("POST registerUser userDto saved {} ", userModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(userModel);
     }
 
