@@ -2,6 +2,7 @@ package com.organization.project.authuser.clients;
 
 import com.organization.project.authuser.dtos.CourseDto;
 import com.organization.project.authuser.dtos.ResponsePageDto;
+import com.organization.project.authuser.services.UtilsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -21,12 +22,14 @@ public class UserClient {
 
     @Autowired
     RestTemplate restTemplate;
-    String REQUEST_URI = "http://localhost:8082";
+
+    @Autowired
+    UtilsService utilsService;
+
     public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable){
         ResponseEntity<ResponsePageDto<CourseDto>> result = null;
         List<CourseDto> searchResult = null;
-        String url = REQUEST_URI + "/courses?userId=" + userId + "&page=" + pageable.getPageNumber() + "&size=" +
-                pageable.getPageSize() + "&sort=" + pageable.getSort().toString().replaceAll(": ", ",");
+        String url = utilsService.createUrl(userId, pageable);
         log.info("Request url {}", url);
         try{
             ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType = new ParameterizedTypeReference<ResponsePageDto<CourseDto>>() { };
