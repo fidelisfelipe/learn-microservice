@@ -62,8 +62,16 @@ public class CourseController {
     }
     @GetMapping
     public ResponseEntity<Object> getAll(SpecificationTemplate.CourseSpec spec,
-                                         @PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.ASC) Pageable pageable){
-        Page<CourseModel> courseList = courseService.findAll(spec, pageable);
+                                         @PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.ASC) Pageable pageable,
+                                         @RequestParam(required = false) UUID userId){
+        Page<CourseModel> courseList = null;
+
+        if(userId != null){
+            courseList = courseService.findAll(SpecificationTemplate.courseUserId(userId).and(spec), pageable);
+        }else{
+            courseList = courseService.findAll(spec, pageable);
+        }
+
         if(courseList.isEmpty()){
             return ResponseEntity.status(HttpStatus.OK).body("empty courses");
         }
