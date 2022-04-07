@@ -1,7 +1,7 @@
 package com.organization.project.course.dtos;
 
-import com.organization.project.course.enums.CourseLevel;
-import com.organization.project.course.enums.CourseStatus;
+import com.organization.project.course.model.enums.CourseLevel;
+import com.organization.project.course.model.enums.CourseStatus;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
