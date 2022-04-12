@@ -5,6 +5,7 @@ import com.organization.project.course.dtos.UserDto;
 import com.organization.project.course.services.UtilsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,10 +28,13 @@ public class CourseClient {
     @Autowired
     UtilsService utilsService;
 
+    @Value("${api.url.auth}")
+    String REQUEST_URL_AUTH;
+
     public Page<UserDto> getAllUsersByCourse(UUID courseId, Pageable pageable){
         ResponseEntity<ResponsePageDto<UserDto>> result = null;
         List<UserDto> searchResult = null;
-        String url = utilsService.createUrl(courseId, pageable);
+        String url = REQUEST_URL_AUTH +utilsService.createUrlGetAllUsersByCourse(courseId, pageable);
         log.info("Request url {}", url);
         try{
             ParameterizedTypeReference<ResponsePageDto<UserDto>> responseType = new ParameterizedTypeReference<ResponsePageDto<UserDto>>() { };
