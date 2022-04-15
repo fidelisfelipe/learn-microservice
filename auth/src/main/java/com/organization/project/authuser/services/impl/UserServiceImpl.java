@@ -1,10 +1,13 @@
 package com.organization.project.authuser.services.impl;
 
+import com.organization.project.authuser.models.UserCourseModel;
 import com.organization.project.authuser.models.UserModel;
+import com.organization.project.authuser.repositories.UserCourseRepository;
 import com.organization.project.authuser.repositories.UserRepository;
 import com.organization.project.authuser.services.UserService;
 import com.organization.project.authuser.specifications.SpecificationTemplate;
 import org.apache.catalina.User;
+import org.apache.commons.lang3.text.StrBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+    private UserCourseRepository userCourseRepository;
 
     @Override
     public List<UserModel> findAll() {
@@ -34,6 +38,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(UserModel userModel) {
+        List<UserCourseModel> userCourseModelList = userCourseRepository.findAllUserCourseIntoUser(userModel.getUserId());
+        if(!userCourseModelList.isEmpty()){
+            userCourseRepository.deleteAll(userCourseModelList);
+        }
         userRepository.delete(userModel);
     }
 
