@@ -27,4 +27,4 @@ logging:
 
 api:
   url:
-    course: 'http://localhost:8087'
+    course: 'http://localhost:8082'

@@ -1,7 +1,9 @@
 package com.organization.project.course.clients;
 
+import com.organization.project.course.dtos.CourseUserDto;
 import com.organization.project.course.dtos.ResponsePageDto;
 import com.organization.project.course.dtos.UserDto;
+import com.organization.project.course.model.CourseUserModel;
 import com.organization.project.course.services.UtilsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -43,6 +46,7 @@ public class AuthUserClient {
             log.debug("elements users size {}", searchResult.size());
         }catch (HttpStatusCodeException e){
             log.error("Error: {}", e);
+            throw e;
         }
         log.info("End request / courseId {}", courseId);
         return result.getBody();
@@ -53,4 +57,11 @@ public class AuthUserClient {
         return restTemplate.exchange(url, HttpMethod.GET, null, UserDto.class);
     }
 
+    public void postSubscriptionUserInCourse(UUID courseId, UUID userId) {
+        String url = REQUEST_URL_AUTH + "/users/" + userId + "/courses/subscription";
+        CourseUserDto courseUserDto = new CourseUserDto();
+        courseUserDto.setUserId(userId);
+        courseUserDto.setCourseId(courseId);
+        restTemplate.postForObject(url, courseUserDto, String.class);
+    }
 }

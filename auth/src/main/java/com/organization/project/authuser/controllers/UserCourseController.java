@@ -16,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -40,8 +41,17 @@ public class UserCourseController {
     @GetMapping("/users/{userId}/courses")
     public ResponseEntity<Page<CourseDto>> getAllCourseByUser(@PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.ASC)Pageable pageable,
                                                               @PathVariable(value="userId") UUID userId){
-        return ResponseEntity.status(HttpStatus.OK).body(courseClient.getAllCoursesByUser(userId, pageable));
+        Page<CourseDto> pageResult = Page.empty();
 
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(courseClient.getAllCoursesByUser(userId, pageable));
+        }catch (HttpStatusCodeException e) {
+            if(e.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pageResult);
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pageResult);
     }
     @PostMapping("/users/{userId}/courses/subscription")
     public ResponseEntity<Object> saveSubscriptionUserInCourse(@PathVariable(value = "userId") UUID userId,

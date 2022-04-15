@@ -55,7 +55,7 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
     @Column(length = 20)
     private String phoneNumber;
 
-    @Column(length = 20)
+    @Column(length = 20, unique = true)
     private String cpf;
 
     @Column

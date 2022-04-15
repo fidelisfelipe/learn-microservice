@@ -42,6 +42,7 @@ public class CourseClient {
             log.debug("elements courses size {}", searchResult.size());
         }catch (HttpStatusCodeException e){
             log.error("Error: {}", e);
+            throw e;
         }
         log.info("End request / userId {}", userId);
         return result.getBody();

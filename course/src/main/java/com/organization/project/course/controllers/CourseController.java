@@ -73,7 +73,7 @@ public class CourseController {
         }
 
         if(courseList.isEmpty()){
-            return ResponseEntity.status(HttpStatus.OK).body("empty courses");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("empty courses");
         }
         return ResponseEntity.status(HttpStatus.OK).body(courseList);
     }

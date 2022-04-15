@@ -64,10 +64,10 @@ public class CourseUserController {
 
         }catch (HttpStatusCodeException e){
             if(e.getStatusCode().equals(HttpStatus.NOT_FOUND))
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("User not found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
 
-        CourseUserModel courseUserModel = courseUserService.save(courseOptional.get().convertToCourseUserModel(subscriptionDto.getUserId()));
+        CourseUserModel courseUserModel = courseUserService.saveAndSendSubscriptionUserInCourse(courseOptional.get().convertToCourseUserModel(subscriptionDto.getUserId()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(courseUserModel);
     }
