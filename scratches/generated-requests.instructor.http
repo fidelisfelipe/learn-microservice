@@ -1,0 +1,11 @@
+### subscription instructor
+POST http://localhost:8087/instructors/subscription
+Content-Type: application/json
+
+{
+    "userId": "67210d27-2808-4e76-8076-9bc1c36960cc"
+}
+
+<> 2022-04-15T184527.200.json
+<> 2022-04-15T182120.200.json
+

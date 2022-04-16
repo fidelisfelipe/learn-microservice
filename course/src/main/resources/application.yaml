@@ -28,7 +28,7 @@ logging:
 
 api:
   url:
-    auth: 'http://localhost:8087'
+    auth: 'http://project-auth-service'
 
 eureka:
   client:

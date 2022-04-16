@@ -1,0 +1,103 @@
+### user - get all with specs
+GET http://localhost:8087/users?sort=creationDate,desc&page=0
+Content-Type: application/json
+
+### user - get all with specs
+GET http://localhost:8087/users?userType=STUDENT&email=test@test
+
+### user - get all without specs
+GET http://localhost:8087/users
+Content-Type: application/json
+
+### user - signup user
+POST http://localhost:8087/auth/signup
+Content-Type: application/json
+
+{
+  "username": "usertwo",
+  "email": "usertwo@email.com",
+  "password": "111111111",
+  "fullName": "User Two Full Name",
+  "phoneNumber": "+111111111111",
+  "cpf": "11111111111"
+}
+
+<> 2022-04-15T184217.201.json
+
+### user - get one by user
+GET http://localhost:8087/users/6156d7d8-a37a-4fbf-96bc-20ecca553a00
+
+<> 2022-04-15T174025.200.json
+<> 2022-04-15T172818.200.json
+<> 2022-04-15T172816.200.json
+
+### user - remove by user
+DELETE http://localhost:8087/users/6156d7d8-a37a-4fbf-96bc-20ecca553a00
+
+### update user by id
+PUT http://localhost:8087/users/6156d7d8-a37a-4fbf-96bc-20ecca553a00
+Content-Type: application/json
+
+{
+  "fullName": "User One Full Name Updated",
+  "phoneNumber": "+12345678913",
+  "cpf": "22222222222"
+}
+
+<> 2022-03-22T014504.200.json
+<> 2022-03-22T013921.405.json
+
+### user - update password
+PUT http://localhost:8087/users/6156d7d8-a37a-4fbf-96bc-20ecca553a00/password
+Content-Type: application/json
+
+{
+  "password": "1234562456",
+  "oldPassword": "111111111"
+}
+
+###
+PUT http://localhost:8087/users/6156d7d8-a37a-4fbf-96bc-20ecca553a00/image
+Content-Type: application/json
+
+{
+  "imageURL": "https://vigilianerd.com.br/wp-content/uploads/2020/11/afro-samurai-capa-vigilia-nerd.jpg"
+}
+
+### user - get courses by user
+GET http://localhost:8087/users/6156d7d8-a37a-4fbf-96bc-20ecca553a00/courses
+Content-Type: application/json
+
+<> 2022-04-15T221032.200.json
+<> 2022-04-15T211029.200.json
+<> 2022-04-15T175149.200.json
+<> 2022-04-15T174652.404.json
+<> 2022-04-15T174505.500.json
+<> 2022-04-15T174243.500.json
+<> 2022-04-15T174041.500.json
+<> 2022-04-15T150243.500.json
+<> 2022-04-15T150206.500.json
+<> 2022-04-15T150043.500.json
+
+### user - users by course
+GET http://localhost:8087/users?courseId=76edf4ed-28db-451f-a122-3a130c9396c2&sort=creationDate,desc&page=0
+Content-Type: application/json
+
+<> 2022-04-15T175159.200.json
+<> 2022-04-15T175142.200.json
+<> 2022-04-15T174705.200.json
+<> 2022-04-15T162325.200.json
+
+### user - subscription user in course - only user associate - used for course subscription
+POST http://localhost:8087/users/6156d7d8-a37a-4fbf-96bc-20ecca553a00/courses/subscription
+Content-Type: application/json
+
+{
+  "courseId": "76edf4ed-28db-451f-a122-3a130c9396c2"
+}
+
+<> 2022-04-15T174802.201.json
+<> 2022-04-15T164451.409.txt
+
+### user - test log
+GET http://localhost:8087/auth/logtest

@@ -28,7 +28,7 @@ logging:
 
 api:
   url:
-    course: 'http://localhost:8082'
+    course: 'http://project-course-service'
 
 eureka:
   client:

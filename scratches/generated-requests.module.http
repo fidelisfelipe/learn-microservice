@@ -1,0 +1,17 @@
+###
+GET http://localhost:8082/modules/a5cf43bc-c5d9-43ab-85d4-4f6f8a6af1bc/modules?page=0&size=1&sort=creationDate,DESC
+
+<> 2022-03-31T031456.200.json
+<> 2022-03-31T031425.400.json
+
+###
+POST http://localhost:8082/modules/a5cf43bc-c5d9-43ab-85d4-4f6f8a6af1bb/modules
+Content-Type: application/json
+
+{
+ "title": "modulo 3",
+ "description": "descrição do modulo"
+}
+
+
+

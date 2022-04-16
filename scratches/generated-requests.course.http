@@ -1,0 +1,116 @@
+### course - get all with specs
+GET http://localhost:8082/courses?name=curso&courseStatus=INPROGRESS&courseLevel=BEGINNER
+
+<> 2022-04-15T145040.200.txt
+<> 2022-04-15T144854.200.json
+
+### course - get all without specs
+GET http://localhost:8082/courses
+
+<> 2022-04-16T153739.200.json
+<> 2022-04-15T211320.200.json
+<> 2022-04-15T211130.200.json
+<> 2022-04-15T164426.200.json
+<> 2022-04-15T164411.200.json
+<> 2022-04-15T162240.200.json
+<> 2022-04-15T145105.200.json
+<> 2022-04-15T145042.200.txt
+<> 2022-04-15T144857.200.json
+
+### course - get all by user
+GET http://localhost:8082/courses?userId=6156d7d8-a37a-4fbf-96bc-20ecca553a00
+
+<> 2022-04-16T153748.200.json
+<> 2022-04-15T211526.200.json
+<> 2022-04-15T211314.200.json
+<> 2022-04-15T162240.200.json
+<> 2022-04-15T145105.200.json
+
+### course - signup one
+POST http://localhost:8082/courses
+Content-Type: application/json
+
+{
+  "name": "Curso de programação avançado",
+  "description": "descrição de um curso",
+  "courseStatus": "INPROGRESS",
+  "courseLevel": "BEGINNER",
+  "userInstructor": "67210d27-2808-4e76-8076-9bc1c36960cc"
+}
+
+<> 2022-04-15T211122.201.json
+<> 2022-04-15T184758.201.json
+<> 2022-04-15T184724.201.json
+<> 2022-04-15T184555.201.json
+<> 2022-04-15T184402.400.json
+<> 2022-04-15T145046.201.json
+
+### course - get one
+GET http://localhost:8082/courses/76edf4ed-28db-451f-a122-3a130c9396c2
+
+<> 2022-04-15T211215.200.json
+<> 2022-04-15T145128.200.json
+<> 2022-04-15T145122.200.json
+<> 2022-04-15T144935.200.json
+
+### course - update course
+PUT http://localhost:8082/courses/76edf4ed-28db-451f-a122-3a130c9396c2
+Content-Type: application/json
+
+{
+  "name": "curso de programação updated",
+  "description": "descrição de um curso updated",
+  "courseStatus": "INPROGRESS",
+  "courseLevel": "BEGINNER",
+  "userInstructor": "420ca88f-fbb4-4746-96ac-7a913c30a12d"
+}
+
+<> 2022-04-15T145136.200.json
+<> 2022-04-15T145013.200.json
+<> 2022-04-15T145009.200.json
+
+
+### course - remove course by courseId
+DELETE http://localhost:8082/courses/f947d8f3-478a-4531-99aa-6229f73aff24
+
+<> 2022-04-16T154048.500.json
+<> 2022-04-15T234215.500.json
+<> 2022-04-15T233552.500.json
+<> 2022-04-15T233040.500.json
+<> 2022-04-15T223551.500.json
+<> 2022-04-15T223046.500.json
+<> 2022-04-15T222110.500.json
+<> 2022-04-15T221637.500.json
+<> 2022-04-15T213334.500.json
+<> 2022-04-15T212314.500.json
+
+### course - get all courses by user
+GET http://localhost:8082/courses?userId=6156d7d8-a37a-4fbf-96bc-20ecca553a00
+
+<> 2022-04-15T211255.200.json
+<> 2022-04-15T211235.200.json
+<> 2022-04-15T211231.200.json
+<> 2022-04-15T174936.404.txt
+<> 2022-04-15T145244.200.txt
+
+//get signup auth for continue tests
+
+
+### course - subscription user in course - integrated from user subscription
+POST http://localhost:8082/courses/f947d8f3-478a-4531-99aa-6229f73aff24/users/subscription
+Content-Type: application/json
+
+{
+  "userId": "6156d7d8-a37a-4fbf-96bc-20ecca553a00"
+}
+
+<> 2022-04-15T211427.201.json
+
+### course - get users by course
+GET http://localhost:8082/courses/76edf4ed-28db-451f-a122-3a130c9396c2/users
+Content-Type: application/json
+
+<> 2022-04-15T175316.200.json
+<> 2022-04-15T175302.200.json
+
+
