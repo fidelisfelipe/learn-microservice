@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: project-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: project-authuser-service
+          uri: http://localhost:8087
+          predicates:
+            - Path=/project-authuser/**
+        - id: project-course-service
+          uri: http://localhost:8087
+          predicates:
+            - Path=/project-course/**
