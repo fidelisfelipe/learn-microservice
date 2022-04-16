@@ -45,8 +45,8 @@ public class SpecificationTemplate {
             query.distinct(true);
             Root<LessonModel> lesson = root;
             Root<ModuleModel> module = query.from(ModuleModel.class);
-            Expression<Collection<ModuleModel>> lessonModules = module.get("lessonList");
-            return cb.and(cb.equal(lesson.get("moduleId"), moduleId), cb.isMember(module, lessonModules));
+            Expression<Collection<LessonModel>> moduleLessons  = module.get("lessonList");
+            return cb.and(cb.equal(module.get("moduleId"), moduleId), cb.isMember(lesson, moduleLessons));
         };
     }
 

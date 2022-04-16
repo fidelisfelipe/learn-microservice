@@ -17,6 +17,9 @@
         <java.version>11</java.version>
         <specification.resolver.version>2.6.2</specification.resolver.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>
+
+        <slf4j.version>1.7.30</slf4j.version>
+        <spring-data-releasetrain.version>Moore-SR6</spring-data-releasetrain.version>
     </properties>
     <dependencies>
         <dependency>
@@ -106,5 +109,16 @@
             </plugin>
         </plugins>
     </build>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <url>https://repo.spring.io/snapshot</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <url>https://repo.spring.io/milestone</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>

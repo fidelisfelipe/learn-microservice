@@ -28,7 +28,7 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(nullable = false, columnDefinition = "VARCHAR(36)")
-    @Type(type = "uuid-char")
+    @Type(type="org.hibernate.type.UUIDCharType")
     private UUID userId;
 
     @Column(nullable = false, unique = true, length = 50)

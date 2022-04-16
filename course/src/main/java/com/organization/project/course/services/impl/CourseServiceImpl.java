@@ -1,5 +1,6 @@
 package com.organization.project.course.services.impl;
 
+import com.organization.project.course.clients.AuthUserClient;
 import com.organization.project.course.model.CourseModel;
 import com.organization.project.course.model.CourseUserModel;
 import com.organization.project.course.model.LessonModel;
@@ -36,10 +37,14 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     CourseUserRepository courseUserRepository;
 
+    @Autowired
+    AuthUserClient authUserClient;
+
     //TODO: verificar inconsistencia deste metodo
     @Transactional
     @Override
     public void delete(CourseModel courseModel) {
+        boolean deleteCourseUserInAuthUser = Boolean.FALSE;
         List<ModuleModel> moduleModelList = moduleRepository.findAllModulesIntoCourse(courseModel.getCourseId());
         if(!moduleModelList.isEmpty()){
             for (ModuleModel module : moduleModelList){
@@ -51,12 +56,16 @@ public class CourseServiceImpl implements CourseService {
             moduleRepository.deleteAll(moduleModelList);
         }
 
-        //TODO: verificar inconsistencia deste ponto
+        //TODO: verificar inconsistencia deste ponto - não funciona com native query no mysql
         List<CourseUserModel> courseUserModelList = courseUserRepository.findAllCourseUserIntoCourse(courseModel.getCourseId());
         if(!courseUserModelList.isEmpty()){
             courseUserRepository.deleteAll(courseUserModelList);
+            deleteCourseUserInAuthUser = Boolean.TRUE;
         }
         courseRepository.delete(courseModel);
+
+        if(deleteCourseUserInAuthUser)
+            authUserClient.deleteCourseInAuthUser(courseModel.getCourseId());
 
     }
 

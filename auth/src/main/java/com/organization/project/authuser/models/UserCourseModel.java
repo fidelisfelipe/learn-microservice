@@ -24,14 +24,14 @@ public class UserCourseModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(nullable = false, columnDefinition = "VARCHAR(36)")
-    @Type(type = "uuid-char")
+    @Type(type="org.hibernate.type.UUIDCharType")
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private UserModel user;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(36)")
-    @Type(type = "uuid-char")
+    @Type(type="org.hibernate.type.UUIDCharType")
     private UUID courseId;
 
 }
