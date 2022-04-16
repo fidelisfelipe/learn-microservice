@@ -30,7 +30,7 @@ logging:
 
 api:
   url:
-    auth: 'http://project-auth-service'
+    auth: 'http://project-authuser-service/project-authuser'
 
 eureka:
   client:

@@ -30,7 +30,7 @@ logging:
 
 api:
   url:
-    course: 'http://project-course-service'
+    course: 'http://project-course-service/protect-course'
 
 eureka:
   client:
