@@ -7,10 +7,16 @@ spring:
     gateway:
       routes:
         - id: project-authuser-service
-          uri: http://localhost:8087
+          uri: lb://project-authuser-service
           predicates:
             - Path=/project-authuser/**
         - id: project-course-service
-          uri: http://localhost:8087
+          uri: lb://project-course-service
           predicates:
             - Path=/project-course/**
+eureka:
+  client:
+    service-url:
+      defaultZone: 'http://localhost:8761/eureka'
+  instance:
+    hostname: localhost

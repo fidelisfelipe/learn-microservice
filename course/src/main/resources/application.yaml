@@ -12,7 +12,7 @@ spring:
     jpa:
       hibernate:
         ddl-auto: update
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         jdbc:
           lob.non-contextual-creation: true
       properties:

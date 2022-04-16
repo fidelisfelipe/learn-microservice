@@ -4,7 +4,7 @@ server:
     context-path: '/project-authuser/'
 spring:
     application:
-      name: project-auth-service
+      name: project-authuser-service
     datasource:
       url: jdbc:mysql://localhost:3306/auth?useUnicode=true
       username: root
@@ -12,7 +12,7 @@ spring:
     jpa:
         hibernate:
           ddl-auto: update
-          dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+          dialect: org.hibernate.dialect.MySQL8Dialect
           jdbc:
             lob.non-contextual-creation: true
         properties:
