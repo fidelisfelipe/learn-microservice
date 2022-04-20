@@ -28,7 +28,6 @@ public class CourseUserModel implements Serializable {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    //@JoinColumn(name = "course_id") custom name column
     private CourseModel course;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(36)")

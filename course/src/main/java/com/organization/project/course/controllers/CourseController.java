@@ -3,6 +3,7 @@ package com.organization.project.course.controllers;
 import com.organization.project.course.dtos.CourseDto;
 import com.organization.project.course.model.CourseModel;
 import com.organization.project.course.services.CourseService;
+import com.organization.project.course.services.CourseUserService;
 import com.organization.project.course.specifications.SpecificationTemplate;
 import com.organization.project.course.validation.CourseValidator;
 import lombok.extern.log4j.Log4j2;
@@ -33,6 +34,9 @@ public class CourseController {
     @Autowired
     CourseValidator courseValidator;
 
+    @Autowired
+    CourseUserService courseUserService;
+
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody CourseDto dto, Errors errors){
         log.debug("POST save courseDto received {} ", dto.toString());
@@ -57,6 +61,17 @@ public class CourseController {
         }
         courseService.delete(courseOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("deleted successfully");
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<Object> deleteCourseUser(@PathVariable(value = "userId") UUID userId){
+        log.debug("DELETE courseUser by userId {}", userId);
+
+        if(!courseUserService.existsByUserId(userId)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CourseUser not found");
+        }
+        courseUserService.deleteCourseUserByUser(userId);
+        return ResponseEntity.status(HttpStatus.OK).body("deleted courseUser successfully");
     }
 
     @PutMapping("/{courseId}")

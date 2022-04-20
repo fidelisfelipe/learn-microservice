@@ -72,7 +72,7 @@ public class UserCourseController {
     @DeleteMapping("/users/courses/{courseId}")
     public ResponseEntity<Object> deleteCourseByCourse(@PathVariable(value = "courseId") UUID courseId){
         if(!userCourseService.existsByCourseId(courseId)){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("UserCourse not found");
         }
 
         userCourseService.deleteUserCourseByCourse(courseId);

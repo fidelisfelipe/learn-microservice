@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.organization.project.authuser.models.enums.UserStatus;
 import com.organization.project.authuser.models.enums.UserType;
 import lombok.Data;
-import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;

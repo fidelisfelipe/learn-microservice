@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.organization.project.course.model.enums.CourseLevel;
 import com.organization.project.course.model.enums.CourseStatus;
-import lombok.*;
+import lombok.Data;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -24,7 +24,7 @@ public class CourseModel implements Serializable {
     private static final long serialVersionUID = 1L;
 //USED in MYSQL GENERATED
     @Id
-    @GeneratedValue(generator = "uuid2")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(nullable = false, columnDefinition = "VARCHAR(36)")
     @Type(type="org.hibernate.type.UUIDCharType")

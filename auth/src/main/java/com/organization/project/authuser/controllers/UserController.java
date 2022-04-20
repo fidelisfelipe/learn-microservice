@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.organization.project.authuser.dtos.UserDto;
 import com.organization.project.authuser.specifications.SpecificationTemplate;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,7 @@ import javax.validation.Valid;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Log4j2
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/users")
@@ -63,12 +65,15 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Object> delete(@PathVariable(value = "userId") UUID userId){
+    public ResponseEntity<Object> deleteUser(@PathVariable(value = "userId") UUID userId){
+        log.debug("DELETE delete userId received {}", userId);
         Optional<UserModel> user = userService.findById(userId);
         if(!user.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user not found");
 
         userService.delete(user.get());
+        log.debug("DELETE delete userId deleted {}", userId);
+        log.info("User deleted successfully userId {}", userId);
         return ResponseEntity.status(HttpStatus.OK).body(user.get());
     }
 

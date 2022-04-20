@@ -1,5 +1,6 @@
 package com.organization.project.authuser.services.impl;
 
+import com.organization.project.authuser.clients.CourseClient;
 import com.organization.project.authuser.models.UserCourseModel;
 import com.organization.project.authuser.models.UserModel;
 import com.organization.project.authuser.repositories.UserCourseRepository;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,9 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     private UserCourseRepository userCourseRepository;
 
+    @Autowired
+    private CourseClient courseClient;
+
     @Override
     public List<UserModel> findAll() {
         return userRepository.findAll();
@@ -36,13 +41,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(userId);
     }
 
+    @Transactional
     @Override
     public void delete(UserModel userModel) {
+        boolean deleteUserCourseInCourse =  Boolean.FALSE;;
         List<UserCourseModel> userCourseModelList = userCourseRepository.findAllUserCourseIntoUser(userModel.getUserId());
         if(!userCourseModelList.isEmpty()){
             userCourseRepository.deleteAll(userCourseModelList);
+            deleteUserCourseInCourse = Boolean.TRUE;
         }
         userRepository.delete(userModel);
+        if(deleteUserCourseInCourse){
+            courseClient.deleteUserInCourse(userModel.getUserId());
+        }
     }
 
     @Override
