@@ -38,6 +38,11 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: email found");
         }
 
+        if(userService.existsByCpf(userDto.getCpf())) {
+            log.warn("Cpf {} is Already Taken ", userDto.getEmail());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: cpf found");
+        }
+
         var userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
         userModel.setUserStatus(UserStatus.ACTIVE);

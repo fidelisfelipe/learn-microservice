@@ -68,6 +68,11 @@ public class UserServiceImpl implements UserService {
     public boolean existsByEmail(String email) { return userRepository.existsByEmail(email); }
 
     @Override
+    public boolean existsByCpf(String cpf) {
+        return userRepository.existsByCpf(cpf);
+    }
+
+    @Override
     public Page<UserModel> findAll(Specification<UserModel> spec, Pageable pageable) {
         return userRepository.findAll(spec, pageable);
     }
