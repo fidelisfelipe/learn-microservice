@@ -1,6 +1,5 @@
 package com.organization.project.authuser.specifications;
 
-import com.organization.project.authuser.models.UserCourseModel;
 import com.organization.project.authuser.models.UserModel;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
@@ -20,12 +19,4 @@ public class SpecificationTemplate {
             @Spec(path = "fullName", spec = Like.class)
     })
     public interface UserSpec extends Specification<UserModel> {}
-
-    public static Specification<UserModel> userCourseId(final UUID courseId){
-        return (root, query, cb) -> {
-            query.distinct(true);
-            Join<UserModel, UserCourseModel> userProd = root.join("userCourseList");
-            return cb.equal(userProd.get("courseId"), courseId);
-        };
-    }
 }

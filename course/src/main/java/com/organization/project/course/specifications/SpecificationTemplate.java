@@ -1,7 +1,7 @@
 package com.organization.project.course.specifications;
 
 import com.organization.project.course.model.CourseModel;
-import com.organization.project.course.model.CourseUserModel;
+import com.organization.project.course.model.UserModel;
 import com.organization.project.course.model.LessonModel;
 import com.organization.project.course.model.ModuleModel;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
@@ -47,14 +47,6 @@ public class SpecificationTemplate {
             Root<ModuleModel> module = query.from(ModuleModel.class);
             Expression<Collection<LessonModel>> moduleLessons  = module.get("lessonList");
             return cb.and(cb.equal(module.get("moduleId"), moduleId), cb.isMember(lesson, moduleLessons));
-        };
-    }
-
-    public static Specification<CourseModel> courseUserId(final UUID userId){
-        return (root, query, cb) -> {
-            query.distinct(true);
-            Join<CourseModel, CourseUserModel> courseProd = root.join("courseUserList");
-            return cb.equal(courseProd.get("userId"), userId);
         };
     }
 }
