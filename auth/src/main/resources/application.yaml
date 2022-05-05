@@ -22,7 +22,7 @@ spring:
       ansi:
         enabled: always
     rabbitmq:
-      addresses: amqps://xzimtztl:EDqAKhKsXqG0SXgG9xK1Do4m2VCer5kK@chinook.rmq.cloudamqp.com/xzimtztl
+      addresses: url da Mq vai aki
 logging:
   level:
     com.organization.project.authuser: TRACE
