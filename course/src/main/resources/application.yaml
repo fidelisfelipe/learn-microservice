@@ -22,7 +22,7 @@ spring:
       ansi:
         enabled: always
     rabbitmq:
-      addresses: URL da mq vai aki
+      addresses: 
 logging:
   level:
     com.organization.project.course: TRACE

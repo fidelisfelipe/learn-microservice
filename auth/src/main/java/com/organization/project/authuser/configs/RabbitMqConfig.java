@@ -26,7 +26,8 @@ public class RabbitMqConfig {
         return template;
     }
 
-    private Jackson2JsonMessageConverter metadataMessageConverter() {
+    @Bean
+    public Jackson2JsonMessageConverter metadataMessageConverter() {
         return new Jackson2JsonMessageConverter(objectMapper());
     }
 
