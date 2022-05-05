@@ -56,4 +56,12 @@ public class CourseModel implements Serializable {
     @Fetch(FetchMode.SUBSELECT)
     //@OnDelete(action = OnDeleteAction.CASCADE)//responsabilidade é passada para o banco de dados
     private Set<ModuleModel> moduleList;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "TB_COURSES_USERS",
+                    joinColumns = @JoinColumn(name = "course_id"),
+                    inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<UserModel> userList;
+
 }

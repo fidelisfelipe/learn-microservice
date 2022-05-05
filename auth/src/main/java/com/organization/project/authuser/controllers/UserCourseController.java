@@ -1,9 +1,7 @@
 package com.organization.project.authuser.controllers;
 
 import com.organization.project.authuser.clients.CourseClient;
-import com.organization.project.authuser.dto.UserCourseDto;
 import com.organization.project.authuser.dtos.CourseDto;
-import com.organization.project.authuser.models.UserModel;
 import com.organization.project.authuser.services.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +11,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpStatusCodeException;
 
-import javax.validation.Valid;
-import java.util.Optional;
 import java.util.UUID;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Log4j2
 @RestController

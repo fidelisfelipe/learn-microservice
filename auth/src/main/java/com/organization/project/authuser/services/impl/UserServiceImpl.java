@@ -1,7 +1,9 @@
 package com.organization.project.authuser.services.impl;
 
 import com.organization.project.authuser.clients.CourseClient;
+import com.organization.project.authuser.models.enums.ActionType;
 import com.organization.project.authuser.models.UserModel;
+import com.organization.project.authuser.publishers.UserEventPublisher;
 import com.organization.project.authuser.repositories.UserRepository;
 import com.organization.project.authuser.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CourseClient courseClient;
+
+    @Autowired
+    private UserEventPublisher userEventPublisher;
 
     @Override
     public List<UserModel> findAll() {
@@ -44,6 +49,14 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userModel);
     }
 
+    @Transactional
+    @Override
+    public UserModel saveUser(UserModel userModel) {
+        save(userModel);
+        userEventPublisher.publishEvent(userModel.convertToUserEventDto(), ActionType.CREATE);
+        return userModel;
+    }
+
     @Override
     public boolean existsByUsername(String username) { return userRepository.existsByUsername(username); }
 
@@ -56,8 +69,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserModel> findAll(Specification<UserModel> spec, Pageable pageable) {
-        return userRepository.findAll(spec, pageable);
+    public Page<UserModel> findAll(Specification<UserModel> spec,
+                                   Pageable pageable) { return userRepository.findAll(spec, pageable);
     }
 
 

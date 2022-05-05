@@ -21,6 +21,8 @@ spring:
     output:
       ansi:
         enabled: always
+    rabbitmq:
+      addresses: amqps://xzimtztl:EDqAKhKsXqG0SXgG9xK1Do4m2VCer5kK@chinook.rmq.cloudamqp.com/xzimtztl
 logging:
   level:
     com.organization.project.authuser: TRACE
@@ -31,6 +33,10 @@ logging:
 api:
   url:
     course: 'http://project-course-service/protect-course'
+
+broker:
+  exchange:
+    userEvent: ead.userevent
 
 eureka:
   client:
