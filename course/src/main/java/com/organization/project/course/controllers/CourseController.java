@@ -83,7 +83,7 @@ public class CourseController {
                                          @RequestParam(required = false) UUID userId){
         Page<CourseModel> courseList = null;
         if(userId != null){
-            courseList = courseService.findAll(SpecificationTemplate.courseUserId(userId).and(spec), pageable);
+            courseList = courseService.findAll(SpecificationTemplate.courseListByUserId(userId).and(spec), pageable);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(courseList);
         }

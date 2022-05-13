@@ -27,7 +27,7 @@ public class CourseModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(nullable = false, columnDefinition = "VARCHAR(36)")
-    @Type(type="org.hibernate.type.UUIDCharType")
+    @Type(type = "uuid-char")
     private UUID courseId;
 
     @Column(nullable = false, length = 150)
@@ -48,7 +48,8 @@ public class CourseModel implements Serializable {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private CourseLevel courseLevel;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(36)")
+    @Type(type="org.hibernate.type.UUIDCharType")
     private UUID userInstructor;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -57,11 +58,7 @@ public class CourseModel implements Serializable {
     //@OnDelete(action = OnDeleteAction.CASCADE)//responsabilidade é passada para o banco de dados
     private Set<ModuleModel> moduleList;
 
+    @ManyToMany(mappedBy = "courseList", fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "TB_COURSES_USERS",
-                    joinColumns = @JoinColumn(name = "course_id"),
-                    inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<UserModel> userList;
-
 }

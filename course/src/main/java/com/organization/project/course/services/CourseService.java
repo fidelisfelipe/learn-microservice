@@ -1,6 +1,7 @@
 package com.organization.project.course.services;
 
 import com.organization.project.course.model.CourseModel;
+import com.organization.project.course.model.UserModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,4 +17,8 @@ public interface CourseService {
     Optional<CourseModel> findById(UUID courseId);
 
     Page<CourseModel> findAll(Specification<CourseModel> spec, Pageable pageable);
+
+    void saveSubscriptionUserInCourse(UUID userId, UUID courseId);
+
+    boolean exitsByCourseAndUser(UUID courseId, UUID userId);
 }

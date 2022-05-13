@@ -6,7 +6,7 @@ spring:
     application:
       name: project-authuser-service
     datasource:
-      url: jdbc:mysql://localhost:3306/auth_v2?useUnicode=true
+      url: jdbc:mysql://localhost:3306/auth_v2?useUnicode=true&characterEncoding=UTF-8
       username: root
       password: 123456
     jpa:
@@ -22,7 +22,7 @@ spring:
       ansi:
         enabled: always
     rabbitmq:
-      addresses: 
+      addresses: amqps://kkozvrft:5dCjABZp-T3KWBMOH6eFrsZBfGq_0Lsf@shark.rmq.cloudamqp.com/kkozvrft
 logging:
   level:
     com.organization.project.authuser: TRACE
@@ -32,7 +32,7 @@ logging:
 
 api:
   url:
-    course: 'http://project-course-service/protect-course'
+    course: 'http://project-course-service/project-course'
 
 broker:
   exchange:
@@ -44,3 +44,9 @@ eureka:
       defaultZone: 'http://localhost:8761/eureka'
   instance:
     hostname: localhost
+resilience4j:
+  retry:
+    instances:
+      retryInstance:
+        maxRetryAttempts: 3
+        waitDuration: 5s

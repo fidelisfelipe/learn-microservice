@@ -23,8 +23,10 @@ public class UserModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(nullable = false, columnDefinition = "VARCHAR(36)")
-    @Type(type="org.hibernate.type.UUIDCharType")
+    @Type(type = "uuid-char")
     private UUID userId;
 
     @Column(nullable = false, unique = true, length = 50)
@@ -45,7 +47,12 @@ public class UserModel implements Serializable {
     @Column
     private String imageUrl;
 
-    @ManyToMany(mappedBy = "userList", fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "TB_COURSES_USERS",
+            joinColumns = @JoinColumn(name = "course_id", columnDefinition = "VARCHAR(36)"),
+            inverseJoinColumns = @JoinColumn(name = "user_id",  columnDefinition = "VARCHAR(36)"))
     private Set<CourseModel> courseList;
+
+
 }

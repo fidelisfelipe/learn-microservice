@@ -1,6 +1,5 @@
 <template>
   <div class="signup">
-    <h1>Signup</h1>
 
     <ul>
       <li v-for="(erro, index) of erros" :key="index">
@@ -9,7 +8,7 @@
     </ul>
 
     <form @submit.prevent="signup">
-    //http://localhost:8087/project-authuser/auth/signup
+    <h1>Signup</h1>
       <label>username</label>
       <input type="text" placeholder="username" v-model="user.username">
       <label>email</label>
@@ -24,8 +23,8 @@
        <label>password</label>
       <input type="password" placeholder="password" v-model="user.password">
 
-      <button class="waves-effect waves-light btn-small">
-        Save
+      <button class="waves-effect waves-light btn-small" >
+        Signup
         <i class="material-icons left">save</i>
       </button>
     </form>
@@ -40,14 +39,15 @@ export default defineComponent({
   data(){
     return {
       user: {
-        username: 'usertwo',
-        email:'usertwo@email.com',
-        fullName: 'User Two Full Name',
-        phoneNumber: '+111111111111',
-        cpf: '11111111111',
+        username: 'user'+ Math.random().toString(5).substring(2,7),
+        email:'user'+Math.random().toString(5).substring(2,7)+'@email.com',
+        fullName: 'User '+Math.random().toString(5).substring(2,7)+' Full Name',
+        phoneNumber: Math.random().toString(11).substring(2,12),
+        cpf: Math.random().toString(11).substring(2,12),
         password: '123456'
       },
-      erros: []
+      erros: [],
+      isLoading: null,
     }
   },
   
@@ -61,7 +61,8 @@ export default defineComponent({
       }).catch(e => {
         this.erros = [e.response.data];
       });
-    }
+    },
+    
   }
 
 });

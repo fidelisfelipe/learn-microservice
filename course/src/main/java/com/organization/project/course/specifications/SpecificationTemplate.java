@@ -77,4 +77,14 @@ public class SpecificationTemplate {
             return cb.and(cb.equal(user.get("userId"), userId), cb.isMember(course, userCourseList));
         };
     }
+
+    public static Specification<CourseModel> courseListByUserId(final UUID userId){
+        return (root, query, cb) -> {
+            query.distinct(true);
+            Root<CourseModel> course = root;
+            Root<UserModel> user = query.from(UserModel.class);
+            Expression<Collection<CourseModel>> userCourseList  = user.get("courseList");
+            return cb.and(cb.equal(user.get("userId"), userId), cb.isMember(course, userCourseList));
+        };
+    }
 }

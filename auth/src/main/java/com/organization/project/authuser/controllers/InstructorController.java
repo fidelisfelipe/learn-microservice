@@ -35,7 +35,7 @@ public class InstructorController {
 
         userModel.setUserType(UserType.INSTRUCTOR);
 
-        userService.save(userModel);
+        userService.updateUser(userModel);
 
         return ResponseEntity.status(HttpStatus.OK).body(userModel);
     }

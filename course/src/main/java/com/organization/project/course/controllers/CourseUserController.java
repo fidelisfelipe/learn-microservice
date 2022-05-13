@@ -2,6 +2,8 @@ package com.organization.project.course.controllers;
 
 import com.organization.project.course.dtos.SubscriptionDto;
 import com.organization.project.course.model.CourseModel;
+import com.organization.project.course.model.UserModel;
+import com.organization.project.course.model.enums.UserStatus;
 import com.organization.project.course.services.CourseService;
 import com.organization.project.course.services.UserService;
 import com.organization.project.course.specifications.SpecificationTemplate;
@@ -47,8 +49,22 @@ public class CourseUserController {
         Optional<CourseModel> courseOptional = courseService.findById(courseId);
         if(!courseOptional.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("course not found");
-        //verificações state transfer
-        return ResponseEntity.status(HttpStatus.CREATED).body("");
+
+        if(courseService.exitsByCourseAndUser(courseId, subscriptionDto.getUserId())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("subscription already exists!");
+        }
+        Optional<UserModel> userModelOptional = userService.findById(subscriptionDto.getUserId());
+
+        if(!userModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user not found");
+        }
+
+        if(userModelOptional.get().getUserStatus().equals(UserStatus.BLOCKED.toString())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("user not found");
+        }
+        courseService.saveSubscriptionUserInCourse(userModelOptional.get().getUserId(), courseOptional.get().getCourseId());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("subscription created successfully.");
     }
 
 }

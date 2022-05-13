@@ -1,6 +1,7 @@
 import {http} from './config'
 
 export default {
+    
     signup:(user) => {
         return http.post('project-authuser/auth/signup', user);
     },
@@ -9,6 +10,15 @@ export default {
     },
     update:(user) => {
         return http.put('project-authuser/users/'+user.userId, user)
+    },
+    updatePassword:(user) => {
+        return http.put('project-authuser/users/'+user.userId+'/updatePassword', user)
+    },
+    instructor:(user) => {
+        return http.post('project-authuser/instructors/subscription', user)
+    },
+    updateImage:(user) => {
+        return http.put('project-authuser/users/'+user.userId+'/image', user)
     },
     remove:(userId) => {
         console.log('user.userId:'+userId)

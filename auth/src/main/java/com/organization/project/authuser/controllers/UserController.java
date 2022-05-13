@@ -64,7 +64,7 @@ public class UserController {
         if(!user.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user not found");
 
-        userService.delete(user.get());
+        userService.deleteUser(user.get());
         log.debug("DELETE delete userId deleted {}", userId);
         log.info("User deleted successfully userId {}", userId);
         return ResponseEntity.status(HttpStatus.OK).body(user.get());
@@ -84,7 +84,7 @@ public class UserController {
         userUpdate.setPhoneNumber(userDto.getPhoneNumber());
         userUpdate.setCpf(userDto.getCpf());
 
-        userService.save(user.get());
+        userService.updateUser(user.get());
         return ResponseEntity.status(HttpStatus.OK).body(userUpdate);
     }
 
@@ -104,7 +104,7 @@ public class UserController {
         var userUpdate = user.get();
         userUpdate.setPassword(userDto.getPassword());
 
-        userService.save(user.get());
+        userService.updatePassword(user.get());
         return ResponseEntity.status(HttpStatus.OK).body("password update success");
     }
 
@@ -118,7 +118,7 @@ public class UserController {
         var userUpdate = user.get();
         userUpdate.setImageURL(userDto.getImageURL());
 
-        userService.save(user.get());
+        userService.updateUser(user.get());
         return ResponseEntity.status(HttpStatus.OK).body("image update success");
     }
 }
