@@ -45,6 +45,16 @@ eureka:
   instance:
     hostname: localhost
 resilience4j:
+  circuitbreaker:
+    instances:
+      circuitbreakerInstance:
+        slidingWindowSize: 30 #janela de tempo em segundos
+        permittedNumberOfCallsInHalfOpenState: 2 #limite de requisições em estado meio aberto
+        slidingWindowType: TIME_BASED
+        minimumNumberOfCalls: 2 #minimo de chamadas para inicio da avaliação
+        waitDurationInOpenState: 30s
+        failureRateThreshold: 80 #taxa de falha em % dentro ja janela de tempo para abrir o circuito
+
   retry:
     instances:
       retryInstance:

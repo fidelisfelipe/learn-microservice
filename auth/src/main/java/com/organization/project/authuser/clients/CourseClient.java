@@ -3,6 +3,7 @@ package com.organization.project.authuser.clients;
 import com.organization.project.authuser.dtos.CourseDto;
 import com.organization.project.authuser.dtos.ResponsePageDto;
 import com.organization.project.authuser.services.UtilsService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
@@ -33,7 +35,8 @@ public class CourseClient {
     @Value("${api.url.course}")
     String REQUEST_URI_COURSE;
 
-    @Retry(name = "retryInstance", fallbackMethod = "retryfallback")
+    //@Retry(name = "retryInstance", fallbackMethod = "retryfallback") //used for method retry for resiliency strategy
+    @CircuitBreaker(name = "circuitbreakerInstance" , fallbackMethod = "circuitfallback")
     public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable){
         ResponseEntity<ResponsePageDto<CourseDto>> result = null;
         List<CourseDto> searchResult = null;
@@ -54,6 +57,11 @@ public class CourseClient {
 
     public Page<CourseDto> retryfallback(UUID userId, Pageable pageable, Throwable e){
         log.error("Inside retry retryfallback, cause - {}", e.toString());
+        return new PageImpl<>(Collections.emptyList());
+    }
+
+    public Page<CourseDto> circuitfallback(UUID userId, Pageable pageable, Throwable e){
+        log.error("Inside circuit circuitfallback, cause - {}", e.toString());
         return new PageImpl<>(Collections.emptyList());
     }
 }
